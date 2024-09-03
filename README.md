@@ -65,9 +65,14 @@ which the bot (`src/main/java/org/acme/Bot.java`) will have automatically access
 On first run, the bot will create the RAG index and store it in `easy-rag-catalog.json` file and reuse it on subsequent runs.
 This can be disabled by setting the `quarkus.langchain4j.easy-rag.reuse-embeddings.enabled` property to `false`.
 
-Then there is a simple startup listener (`src/main/java/org/acme/MyRag.java`) that will query the bot and print the results. 
+Then there is a simple rest end point (`src/main/java/org/acme/MyRagResource.java`) that will query the bot and reply with the results. 
 
-In a more complete example, you would have a web interface that would allow you to query the RAG index, see https://github.com/quarkiverse/quarkus-langchain4j/tree/main/samples/chatbot-easy-rag for such an example.
+You can use `http :8080/rag q='what products are available?'` to query the bot.
+
+To keep a chat history, you need a session. You can use `http --session mychat :8080/rag q='what products are available?'` to query the bot,
+and then follow up with `http --session mychat :8080/rag q='what is #2 about ?'` and it will continue the conversation.
+
+In a more complete example, you would have a web interface and use websockets that would provide more interactive experience, see https://github.com/quarkiverse/quarkus-langchain4j/tree/main/samples/chatbot-easy-rag for such an example.
 
 ## Related Guides
 
